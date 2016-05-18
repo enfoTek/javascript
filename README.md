@@ -1811,12 +1811,12 @@ Other Style Guides
 ## Whitespace
 
   <a name="whitespace--spaces"></a><a name="18.1"></a>
-  - [18.1](#whitespace--spaces) Use soft tabs set to 2 spaces. eslint: [`indent`](http://eslint.org/docs/rules/indent.html) jscs: [`validateIndentation`](http://jscs.info/rule/validateIndentation)
+  - [18.1](#whitespace--spaces) Use soft tabs set to 4 spaces. eslint: [`indent`](http://eslint.org/docs/rules/indent.html) jscs: [`validateIndentation`](http://jscs.info/rule/validateIndentation)
 
     ```javascript
     // bad
     function foo() {
-    ∙∙∙∙const name;
+    ∙∙const name;
     }
 
     // bad
@@ -1826,7 +1826,7 @@ Other Style Guides
 
     // good
     function baz() {
-    ∙∙const name;
+    ∙∙∙∙const name;
     }
     ```
 
@@ -2939,6 +2939,10 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 **[⬆ back to top](#table-of-contents)**
 
 ## Amendments
+
+**OpenDNS Amendments**
+
+  - We have decided for our whitespace to be 4 spaces, but in an effort to keep this guide easily mergeable with AirBNB's guide, we have not updated the example code other than the Whitespace section.
 
 We encourage you to fork this guide and change the rules to fit your team's style guide. Below, you may list some amendments to the style guide. This allows you to periodically update your style guide without having to deal with merge conflicts.
 
