@@ -2,7 +2,14 @@
 // Copy this file, and add rule overrides as needed.
 {
   "extends": "airbnb",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "experimentalObjectRestSpread": true
+    }
+  },
   "rules": {
-    "indent": [2, 4]
+    "indent": [2, 4],
+    "react/jsx-indent": [2, 4],
+    "react/jsx-indent-props": [2, 2]
   }
 }
