@@ -1,3 +1,57 @@
+11.1.3 / 2017-04-03
+==================
+ - [patch] add error messages to `no-restricted-syntax` (#1353)
+ - [deps] update `eslint`
+
+11.1.2 / 2017-03-25
+==================
+ - [patch] `no-param-reassign`: add ignorePropertyModificationsFor (#1325)
+ - [deps] update `eslint`
+
+11.1.1 / 2017-03-03
+==================
+ - [deps] update `eslint`
+ - [patch] enable `ignoreRestSiblings` in `no-unused-vars`
+
+11.1.0 / 2017-01-08
+==================
+ - [minor] enable `no-multi-assign`
+ - [deps] update `eslint`, `babel-preset-airbnb`
+ - Update a deprecated option (`eqeqeq`) (#1244)
+
+11.0.1 / 2017-01-08
+==================
+ - [deps] update `eslint`
+ - [docs] add note about `install-peerdeps` (#1234)
+ - [docs] Updated instructions to support non-bash users (#1214)
+
+11.0.0 / 2016-12-11
+==================
+ - [breaking] enable `no-await-in-loop`
+ - [patch]  disable `no-duplicate-imports` rule (#1188, #1195, #1054)
+ - [patch] `import/no-extraneous-dependencies`: add some comments to ignore patterns
+ - [patch] add `import/no-extraneous-dependencies` ignore patterns for test files (#1174)
+ - [patch] `import/no-extraneous-dependencies`: added ignore patterns for config files (#1168)
+ - [deps] update `eslint`, `eslint-plugin-import`, `tape`
+
+10.0.1 / 2016-11-07
+==================
+ - [fix] legacy config should not require `**`
+
+10.0.0 / 2016-11-06
+==================
+ - [breaking] prefer `**` over `Math.pow`
+ - [breaking] `comma-dangle`: require trailing commas for functions
+ - [breaking] enable `no-useless-return`
+ - [breaking] tighten up `indent`
+ - [breaking] tighten up `spaced-comment`
+ - [breaking] enable `import/no-named-default`
+ - [patch] loosen `max-len` with `ignoreRegExpLiterals` option
+ - [patch] loosen `no-extraneous-dependencies` for test files (#959, #1089)
+ - [deps] update `eslint`, `eslint-plugin-import`
+ - [dev deps] update `eslint-find-rules`
+ - [Tests] on `node` `v7`
+
 9.0.0 / 2016-10-16
 ==================
  - [breaking] Add `ForOfStatement` to `no-restricted-syntax` (#1122, #1134)

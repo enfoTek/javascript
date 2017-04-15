@@ -6,6 +6,7 @@
 
   1. [Basic Rules](#basic-rules)
   1. [Class vs `React.createClass` vs stateless](#class-vs-reactcreateclass-vs-stateless)
+  1. [Mixins](#mixins)
   1. [Naming](#naming)
   1. [Declaration](#declaration)
   1. [Alignment](#alignment)
@@ -28,7 +29,7 @@
 
 ## Class vs `React.createClass` vs stateless
 
-  - If you have internal state and/or refs, prefer `class extends React.Component` over `React.createClass` unless you have a very good reason to use mixins. eslint: [`react/prefer-es6-class`](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/prefer-es6-class.md) [`react/prefer-stateless-function`](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/prefer-stateless-function.md)
+  - If you have internal state and/or refs, prefer `class extends React.Component` over `React.createClass`. eslint: [`react/prefer-es6-class`](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/prefer-es6-class.md) [`react/prefer-stateless-function`](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/prefer-stateless-function.md)
 
     ```jsx
     // bad
@@ -69,6 +70,12 @@
     }
     ```
 
+## Mixins
+
+  - [Do not use mixins](https://facebook.github.io/react/blog/2016/07/13/mixins-considered-harmful.html).
+
+  > Why? Mixins introduce implicit dependencies, cause name clashes, and cause snowballing complexity. Most use cases for mixins can be accomplished in better ways via components, higher-order components, or utility modules.
+
 ## Naming
 
   - **Extensions**: Use `.jsx` extension for React components.
@@ -103,7 +110,7 @@
     ```
   - **Higher-order Component Naming**: Use a composite of the higher-order component's name and the passed-in component's name as the `displayName` on the generated component. For example, the higher-order component `withFoo()`, when passed a component `Bar` should produce a component with a `displayName` of `withFoo(Bar)`.
 
-  > Why? A component's `displayName` may be used by developer tools or in error messages, and having a value that clearly expresses this relationship helps people understand what is happening.
+    > Why? A component's `displayName` may be used by developer tools or in error messages, and having a value that clearly expresses this relationship helps people understand what is happening.
 
     ```jsx
     // bad
@@ -130,7 +137,7 @@
 
   - **Props Naming**: Avoid using DOM component prop names for different purposes.
 
-  > Why? People expect props like `style` and `className` to mean one specific thing. Varying this API for a subset of your app makes the code less readable and less maintainable, and may cause bugs.
+    > Why? People expect props like `style` and `className` to mean one specific thing. Varying this API for a subset of your app makes the code less readable and less maintainable, and may cause bugs.
 
     ```jsx
     // bad
@@ -185,10 +192,9 @@
 
 ## Quotes
 
-  - Always use double quotes (`"`) for JSX attributes, but single quotes for all other JS. eslint: [`jsx-quotes`](http://eslint.org/docs/rules/jsx-quotes)
+  - Always use double quotes (`"`) for JSX attributes, but single quotes (`'`) for all other JS. eslint: [`jsx-quotes`](http://eslint.org/docs/rules/jsx-quotes)
 
-  > Why? JSX attributes [can't contain escaped quotes](http://eslint.org/docs/rules/jsx-quotes), so double quotes make contractions like `"don't"` easier to type.
-  > Regular HTML attributes also typically use double quotes instead of single, so JSX attributes mirror this convention.
+    > Why? Regular HTML attributes also typically use double quotes instead of single, so JSX attributes mirror this convention.
 
     ```jsx
     // bad
@@ -283,7 +289,7 @@
 
   - Do not use words like "image", "photo", or "picture" in `<img>` `alt` props. eslint: [`jsx-a11y/img-redundant-alt`](https://github.com/evcohen/eslint-plugin-jsx-a11y/blob/master/docs/rules/img-redundant-alt.md)
 
-  > Why? Screenreaders already announce `img` elements as images, so there is no need to include this information in the alt text.
+    > Why? Screenreaders already announce `img` elements as images, so there is no need to include this information in the alt text.
 
     ```jsx
     // bad
@@ -338,6 +344,36 @@
   ))}
   ```
 
+  - Always define explicit defaultProps for all non-required props.
+
+  > Why? propTypes are a form of documentation, and providing defaultProps means the reader of your code doesn’t have to assume as much. In addition, it can mean that your code can omit certain type checks.
+
+  ```jsx
+  // bad
+  function SFC({ foo, bar, children }) {
+    return <div>{foo}{bar}{children}</div>;
+  }
+  SFC.propTypes = {
+    foo: PropTypes.number.isRequired,
+    bar: PropTypes.string,
+    children: PropTypes.node,
+  };
+
+  // good
+  function SFC({ foo, bar, children }) {
+    return <div>{foo}{bar}{children}</div>;
+  }
+  SFC.propTypes = {
+    foo: PropTypes.number.isRequired,
+    bar: PropTypes.string,
+    children: PropTypes.node,
+  };
+  SFC.defaultProps = {
+    bar: '',
+    children: null,
+  };
+  ```
+
 ## Refs
 
   - Always use ref callbacks. eslint: [`react/no-string-refs`](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/no-string-refs.md)
@@ -350,13 +386,13 @@
 
     // good
     <Foo
-      ref={ref => { this.myRef = ref; }}
+      ref={(ref) => { this.myRef = ref; }}
     />
     ```
 
 ## Parentheses
 
-  - Wrap JSX tags in parentheses when they span more than one line. eslint: [`react/wrap-multilines`](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/wrap-multilines.md)
+  - Wrap JSX tags in parentheses when they span more than one line. eslint: [`react/jsx-wrap-multilines`](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-wrap-multilines.md)
 
     ```jsx
     // bad
@@ -430,7 +466,7 @@
 
   - Bind event handlers for the render method in the constructor. eslint: [`react/jsx-no-bind`](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-no-bind.md)
 
-  > Why? A bind call in the render path creates a brand new function on every single render.
+    > Why? A bind call in the render path creates a brand new function on every single render.
 
     ```jsx
     // bad
@@ -463,7 +499,7 @@
     ```
 
   - Do not use underscore prefix for internal methods of a React component.
-  > Why? Underscore prefixes are sometimes used as a convention in other languages to denote privacy. But, unlike those languages, there is no native support for privacy in JavaScript, everything is public. Regardless of your intentions, adding underscore prefixes to your properties does not actually make them private, and any property (underscore-prefixed or not) should be treated as being public. See issues [#1024](https://github.com/airbnb/javascript/issues/1024), and [#490](https://github.com/airbnb/javascript/issues/490) for a more in-depth discussion.
+    > Why? Underscore prefixes are sometimes used as a convention in other languages to denote privacy. But, unlike those languages, there is no native support for privacy in JavaScript, everything is public. Regardless of your intentions, adding underscore prefixes to your properties does not actually make them private, and any property (underscore-prefixed or not) should be treated as being public. See issues [#1024](https://github.com/airbnb/javascript/issues/1024), and [#490](https://github.com/airbnb/javascript/issues/490) for a more in-depth discussion.
 
     ```jsx
     // bad
@@ -515,7 +551,7 @@
   1. `componentWillUnmount`
   1. *clickHandlers or eventHandlers* like `onClickSubmit()` or `onChangeDescription()`
   1. *getter methods for `render`* like `getSelectReason()` or `getFooterContent()`
-  1. *Optional render methods* like `renderNavigation()` or `renderProfilePicture()`
+  1. *optional render methods* like `renderNavigation()` or `renderProfilePicture()`
   1. `render`
 
   - How to define `propTypes`, `defaultProps`, `contextTypes`, etc...
@@ -570,7 +606,7 @@
   1. `componentWillUnmount`
   1. *clickHandlers or eventHandlers* like `onClickSubmit()` or `onChangeDescription()`
   1. *getter methods for `render`* like `getSelectReason()` or `getFooterContent()`
-  1. *Optional render methods* like `renderNavigation()` or `renderProfilePicture()`
+  1. *optional render methods* like `renderNavigation()` or `renderProfilePicture()`
   1. `render`
 
 ## `isMounted`
@@ -586,9 +622,14 @@
   This JSX/React style guide is also available in other languages:
 
   - ![cn](https://raw.githubusercontent.com/gosquared/flags/master/flags/flags/shiny/24/China.png) **Chinese (Simplified)**: [JasonBoy/javascript](https://github.com/JasonBoy/javascript/tree/master/react)
-  - ![pl](https://raw.githubusercontent.com/gosquared/flags/master/flags/flags/shiny/24/Poland.png) **Polish**: [pietraszekl/javascript](https://github.com/pietraszekl/javascript/tree/master/react)
-  - ![kr](https://raw.githubusercontent.com/gosquared/flags/master/flags/flags/shiny/24/South-Korea.png) **Korean**: [apple77y/javascript](https://github.com/apple77y/javascript/tree/master/react)
-  - ![Br](https://raw.githubusercontent.com/gosquared/flags/master/flags/flags/shiny/24/Brazil.png) **Portuguese**: [ronal2do/javascript](https://github.com/ronal2do/airbnb-react-styleguide)
+  - ![tw](https://raw.githubusercontent.com/gosquared/flags/master/flags/flags/shiny/24/Taiwan.png) **Chinese (Traditional)**: [jigsawye/javascript](https://github.com/jigsawye/javascript/tree/master/react)
+  - ![es](https://raw.githubusercontent.com/gosquared/flags/master/flags/flags/shiny/24/Spain.png) **Español**: [agrcrobles/javascript](https://github.com/agrcrobles/javascript/tree/master/react)
   - ![jp](https://raw.githubusercontent.com/gosquared/flags/master/flags/flags/shiny/24/Japan.png) **Japanese**: [mitsuruog/javascript-style-guide](https://github.com/mitsuruog/javascript-style-guide/tree/master/react)
+  - ![kr](https://raw.githubusercontent.com/gosquared/flags/master/flags/flags/shiny/24/South-Korea.png) **Korean**: [apple77y/javascript](https://github.com/apple77y/javascript/tree/master/react)
+  - ![pl](https://raw.githubusercontent.com/gosquared/flags/master/flags/flags/shiny/24/Poland.png) **Polish**: [pietraszekl/javascript](https://github.com/pietraszekl/javascript/tree/master/react)
+  - ![Br](https://raw.githubusercontent.com/gosquared/flags/master/flags/flags/shiny/24/Brazil.png) **Portuguese**: [ronal2do/javascript](https://github.com/ronal2do/airbnb-react-styleguide)
+  - ![ru](https://raw.githubusercontent.com/gosquared/flags/master/flags/flags/shiny/24/Russia.png) **Russian**: [leonidlebedev/javascript-airbnb](https://github.com/leonidlebedev/javascript-airbnb/tree/master/react)
+  - ![th](https://raw.githubusercontent.com/gosquared/flags/master/flags/flags/shiny/24/Thailand.png) **Thai**: [lvarayut/javascript-style-guide](https://github.com/lvarayut/javascript-style-guide/tree/master/react)
+  - ![ua](https://raw.githubusercontent.com/gosquared/flags/master/flags/flags/shiny/24/Ukraine.png) **Ukrainian**: [ivanzusko/javascript](https://github.com/ivanzusko/javascript/tree/master/react)
 
 **[⬆ back to top](#table-of-contents)**
